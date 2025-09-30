@@ -31,12 +31,27 @@ public class TelaPrincipalGenio extends javax.swing.JFrame {
         lblvalor = new javax.swing.JLabel();
         btnpalpite = new javax.swing.JButton();
         spnescolha = new javax.swing.JSpinner();
+        txtfalaGenio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblvalor.setText("Valor");
 
         btnpalpite.setText("PALPITE");
+        btnpalpite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnpalpiteActionPerformed(evt);
+            }
+        });
+
+        spnescolha.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
+
+        txtfalaGenio.setText("<html>Vou pensar em um valor entre 1 e 5. Tente adivinhar/html");
+        txtfalaGenio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfalaGenioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,13 +64,19 @@ public class TelaPrincipalGenio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblvalor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnescolha, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(287, Short.MAX_VALUE))
+                        .addComponent(spnescolha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(txtfalaGenio, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(222, Short.MAX_VALUE)
+                .addGap(136, 136, 136)
+                .addComponent(txtfalaGenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblvalor)
                     .addComponent(spnescolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -66,6 +87,24 @@ public class TelaPrincipalGenio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnpalpiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpalpiteActionPerformed
+
+        int min = 1;
+        int max = 5;
+        int palpite = (int) Math.floor(Math.random() * (max - min + 1)) + min;
+        int posicaoSelecionada = (int)spnescolha.getValue();
+
+if (palpite == posicaoSelecionada){
+txtfalaGenio.setText("ACERTOU!");
+} else {
+        txtfalaGenio.setText("ERROU! eu pensei no valor " + palpite);
+}    // TODO add your handling code here:
+    }//GEN-LAST:event_btnpalpiteActionPerformed
+
+    private void txtfalaGenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfalaGenioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfalaGenioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -96,5 +135,6 @@ public class TelaPrincipalGenio extends javax.swing.JFrame {
     private javax.swing.JButton btnpalpite;
     private javax.swing.JLabel lblvalor;
     private javax.swing.JSpinner spnescolha;
+    private javax.swing.JTextField txtfalaGenio;
     // End of variables declaration//GEN-END:variables
 }

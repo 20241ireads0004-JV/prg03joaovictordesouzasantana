@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -30,22 +30,29 @@
                   <Group type="102" attributes="0">
                       <Component id="lblvalor" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="spnescolha" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="spnescolha" min="-2" pref="50" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="287" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <Component id="txtfalaGenio" min="-2" pref="237" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="222" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
+              <Component id="txtfalaGenio" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="64" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblvalor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="spnescolha" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="btnpalpite" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
@@ -62,8 +69,26 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="PALPITE"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnpalpiteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSpinner" name="spnescolha">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="1" maximum="5" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtfalaGenio">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="&quot;&lt;html&gt;Vou pensar em um valor entre 1 e 5. Tente adivinhar/html&quot;" type="code"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtfalaGenioActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
