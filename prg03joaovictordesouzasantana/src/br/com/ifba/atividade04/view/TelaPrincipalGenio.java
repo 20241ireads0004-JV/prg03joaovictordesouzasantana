@@ -28,83 +28,55 @@ public class TelaPrincipalGenio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblvalor = new javax.swing.JLabel();
-        btnpalpite = new javax.swing.JButton();
-        spnescolha = new javax.swing.JSpinner();
-        txtfalaGenio = new javax.swing.JTextField();
+        lblValor = new javax.swing.JLabel();
+        btnPalpite = new javax.swing.JButton();
+        spnEscolha = new javax.swing.JSpinner();
+        lblFalaGenio = new javax.swing.JLabel();
+        lblBalao = new javax.swing.JLabel();
+        lblGenio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblvalor.setText("Valor");
+        lblValor.setText("Valor");
+        getContentPane().add(lblValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 225, 41, -1));
 
-        btnpalpite.setText("PALPITE");
-        btnpalpite.addActionListener(new java.awt.event.ActionListener() {
+        btnPalpite.setText("PALPITE");
+        btnPalpite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnpalpiteActionPerformed(evt);
+                btnPalpiteActionPerformed(evt);
             }
         });
+        getContentPane().add(btnPalpite, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 262, -1, -1));
 
-        spnescolha.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
+        spnEscolha.setModel(new javax.swing.SpinnerNumberModel(1, 1, 5, 1));
+        getContentPane().add(spnEscolha, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 222, 50, -1));
 
-        txtfalaGenio.setText("<html>Vou pensar em um valor entre 1 e 5. Tente adivinhar/html");
-        txtfalaGenio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfalaGenioActionPerformed(evt);
-            }
-        });
+        lblFalaGenio.setText("<html>Vou pensar em um valor entre <strong>1 e 5</strong>. Tente adivinhar!!</html>");
+        getContentPane().add(lblFalaGenio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 110, 60));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnpalpite)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblvalor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnescolha, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(txtfalaGenio, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(txtfalaGenio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblvalor)
-                    .addComponent(spnescolha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnpalpite)
-                .addGap(15, 15, 15))
-        );
+        lblBalao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/Balão.png"))); // NOI18N
+        getContentPane().add(lblBalao, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, -1, -1));
+
+        lblGenio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/ifba/atividade04/images/Gênio.png"))); // NOI18N
+        getContentPane().add(lblGenio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnpalpiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnpalpiteActionPerformed
+    private void btnPalpiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPalpiteActionPerformed
 
         int min = 1;
         int max = 5;
         int palpite = (int) Math.floor(Math.random() * (max - min + 1)) + min;
-        int posicaoSelecionada = (int)spnescolha.getValue();
+        int posicaoSelecionada = (int)spnEscolha.getValue();
 
 if (palpite == posicaoSelecionada){
-txtfalaGenio.setText("ACERTOU!");
+lblFalaGenio.setText("ACERTOU!");
 } else {
-        txtfalaGenio.setText("ERROU! eu pensei no valor " + palpite);
+        lblFalaGenio.setText("<html><strong>ERROU!</strong> eu pensei no valor " + palpite);
 }    // TODO add your handling code here:
-    }//GEN-LAST:event_btnpalpiteActionPerformed
-
-    private void txtfalaGenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfalaGenioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfalaGenioActionPerformed
+    }//GEN-LAST:event_btnPalpiteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,9 +104,11 @@ txtfalaGenio.setText("ACERTOU!");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnpalpite;
-    private javax.swing.JLabel lblvalor;
-    private javax.swing.JSpinner spnescolha;
-    private javax.swing.JTextField txtfalaGenio;
+    private javax.swing.JButton btnPalpite;
+    private javax.swing.JLabel lblBalao;
+    private javax.swing.JLabel lblFalaGenio;
+    private javax.swing.JLabel lblGenio;
+    private javax.swing.JLabel lblValor;
+    private javax.swing.JSpinner spnEscolha;
     // End of variables declaration//GEN-END:variables
 }
