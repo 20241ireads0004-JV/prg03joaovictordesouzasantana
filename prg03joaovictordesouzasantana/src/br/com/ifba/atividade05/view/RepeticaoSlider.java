@@ -4,6 +4,8 @@
  */
 package br.com.ifba.atividade05.view;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author user
@@ -28,21 +30,189 @@ public class RepeticaoSlider extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblInicio = new javax.swing.JLabel();
+        lblFim = new javax.swing.JLabel();
+        lblPasso = new javax.swing.JLabel();
+        sldInicio = new javax.swing.JSlider();
+        sldFim = new javax.swing.JSlider();
+        sldPasso = new javax.swing.JSlider();
+        btnContar = new javax.swing.JButton();
+        lblValor = new javax.swing.JLabel();
+        scrlListaNumeros = new javax.swing.JScrollPane();
+        lstNumeros = new javax.swing.JList<>();
+        lblValorInicio = new javax.swing.JLabel();
+        lblValorPasso = new javax.swing.JLabel();
+        lblValorFim = new javax.swing.JLabel();
+        lblErro = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblInicio.setText("Início");
+
+        lblFim.setText("Fim");
+
+        lblPasso.setText("Passo");
+
+        sldInicio.setMajorTickSpacing(1);
+        sldInicio.setMaximum(10);
+        sldInicio.setMinorTickSpacing(1);
+        sldInicio.setToolTipText("");
+        sldInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        sldInicio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldInicioStateChanged(evt);
+            }
+        });
+
+        sldFim.setMinimum(1);
+        sldFim.setMinorTickSpacing(1);
+        sldFim.setToolTipText("0");
+        sldFim.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldFimStateChanged(evt);
+            }
+        });
+
+        sldPasso.setMajorTickSpacing(1);
+        sldPasso.setMaximum(5);
+        sldPasso.setMinimum(1);
+        sldPasso.setMinorTickSpacing(1);
+        sldPasso.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sldPassoStateChanged(evt);
+            }
+        });
+
+        btnContar.setText("<html><strong>CONTAR</strong></html>");
+        btnContar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContarActionPerformed(evt);
+            }
+        });
+
+        lstNumeros.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        lstNumeros.setAutoscrolls(false);
+        scrlListaNumeros.setViewportView(lstNumeros);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFim))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sldInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sldFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValorInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorFim, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblPasso)
+                        .addGap(18, 18, 18)
+                        .addComponent(sldPasso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblValorPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(btnContar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(lblErro, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addComponent(scrlListaNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89)
+                .addComponent(lblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lblInicio)
+                        .addGap(22, 22, 22)
+                        .addComponent(lblFim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblPasso))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(lblValor, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblValorInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(lblValorFim, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblValorPasso, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(sldInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(sldFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(sldPasso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(31, 31, 31)
+                                    .addComponent(btnContar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lblErro, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(scrlListaNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(17, 17, 17))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sldInicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldInicioStateChanged
+//Mostra valor atual do slider Inicio
+        lblValorInicio.setText(""+sldInicio.getValue());      
+    }//GEN-LAST:event_sldInicioStateChanged
+
+    private void sldFimStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldFimStateChanged
+//Mostra valor atual do slider Fim
+        lblValorFim.setText(""+sldFim.getValue());      
+    }//GEN-LAST:event_sldFimStateChanged
+
+    private void sldPassoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sldPassoStateChanged
+//Mostra o valor atual do slider Passo
+        lblValorPasso.setText(""+sldPasso.getValue());      
+    }//GEN-LAST:event_sldPassoStateChanged
+
+    private void btnContarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContarActionPerformed
+        //Variáveis do tipo int para receber os valores dos sliders
+        int i = sldInicio.getValue();
+        int f = sldFim.getValue();
+        int p = sldPasso.getValue();
+        
+        //Cria um objeto chamado lista do tipo DefaultListModel
+        DefaultListModel lista = new DefaultListModel();
+        
+        //Estrutura de repetição para percorrer do inicio até o final
+        for(int c = i; c <= f; c += p){
+            lista.addElement(c); //Armazena os valores
+        }
+        
+        //Mostra os valores da lista na tela. 
+        lstNumeros.setModel(lista);
+    }//GEN-LAST:event_btnContarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +240,19 @@ public class RepeticaoSlider extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnContar;
+    private javax.swing.JLabel lblErro;
+    private javax.swing.JLabel lblFim;
+    private javax.swing.JLabel lblInicio;
+    private javax.swing.JLabel lblPasso;
+    private javax.swing.JLabel lblValor;
+    private javax.swing.JLabel lblValorFim;
+    private javax.swing.JLabel lblValorInicio;
+    private javax.swing.JLabel lblValorPasso;
+    private javax.swing.JList<String> lstNumeros;
+    private javax.swing.JScrollPane scrlListaNumeros;
+    private javax.swing.JSlider sldFim;
+    private javax.swing.JSlider sldInicio;
+    private javax.swing.JSlider sldPasso;
     // End of variables declaration//GEN-END:variables
 }
