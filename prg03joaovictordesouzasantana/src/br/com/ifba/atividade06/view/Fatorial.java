@@ -9,7 +9,36 @@ package br.com.ifba.atividade06.view;
  * @author user
  */
 public class Fatorial extends javax.swing.JFrame {
+       
+    private int numero = 0;
+    private int fatorial = 1;
+    private String formula = "";
     
+    public void setValor(int num){
+        numero = num;
+        int fat = 1;
+        String fmla = "";
+        
+        for(int c = num; c > 1; c--){
+            fat *= c;
+            
+            fmla+= c + " x ";
+        }
+        
+        fmla += "1 ="; //pra concatenar com o 1
+        
+        fatorial = fat;
+        formula = fmla;
+            
+    }
+    
+    public int getFatorial(){
+        return fatorial;
+    }
+    
+    public String getFormula(){
+        return formula;
+    }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Fatorial.class.getName());
 
     /**
@@ -38,7 +67,14 @@ public class Fatorial extends javax.swing.JFrame {
 
         lblValor.setText("Valor");
 
+        spnValor.setModel(new javax.swing.SpinnerNumberModel(1, 1, 10, 1));
+
         btnCalcular.setText("CALCULAR");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
 
         lblFormula.setText("Fórmula");
 
@@ -80,6 +116,16 @@ public class Fatorial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+
+        int numero = Integer.parseInt(spnValor.getValue().toString());
+        Fatorial fat = new Fatorial();
+        fat.setValor(numero);
+        
+        lblFormula.setText(fat.getFormula());
+        lblResultado.setText(Integer.toString(fat.getFatorial()));
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
     /**
      * @param args the command line arguments
