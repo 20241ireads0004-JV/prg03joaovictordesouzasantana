@@ -41,6 +41,18 @@ public class PerfilUsuario {
     public void setPermissoes(List<String> permissoes) {
         this.permissoes = permissoes;
     }
-    
-    
+    //construtor padrão
+    public PerfilUsuario(){   
+    }
+
+    //construtor para preencher o objeto.
+    public PerfilUsuario(Long id, String descricao, List<String> permissoes){
+        this.id = id;
+        this.descricao = descricao;
+        this.permissoes = permissoes;
+    }
+    //metodo toString para deixar as informações organizadas para leitura do usuario
+     public String toString(){
+        return "PerfilUsuario [ id:" + id + ", descricao: '" + descricao + "' ]";
+    }
 }

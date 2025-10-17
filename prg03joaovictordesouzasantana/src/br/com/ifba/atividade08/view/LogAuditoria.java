@@ -60,5 +60,20 @@ public class LogAuditoria {
         this.ip = ip;
     }
     
-    
+    //construtor padrão
+    public LogAuditoria(){   
+    }
+
+    //construtor para preencher o objeto.
+    public LogAuditoria(Long id, Usuario usuario, String acao, LocalDateTime dataHora, String ip){
+        this.id =id;
+        this.usuario = usuario;
+        this.acao = acao;
+        this.dataHora = dataHora;
+        this.ip = ip;
+    }
+    //metodo toString para deixar as informações organizadas para leitura do usuario
+    public String toString(){
+        return "LogAuditoria [ acao: '" + acao + "', usuario: '" + usuario.getNomeUsuario() + "' ]";
+    }
 }

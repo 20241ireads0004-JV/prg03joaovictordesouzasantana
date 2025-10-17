@@ -78,5 +78,21 @@ public class Usuario {
         this.ativo = ativo;
     }
     
+    //construtor padrao
+    public Usuario(){   
+    }
     
+    //construtor para preencher o objeto.
+    public Usuario(Long id, PerfilUsuario perfil, String nomeUsuario, String email,String senha, Boolean ativo){
+        this.id = id;
+        this.perfil = perfil;
+        this.nomeUsuario = nomeUsuario;
+        this.email = email;
+        this.senha = senha;
+        this.ativo = ativo;
+    }
+    //metodo toString para deixar as informações organizadas para leitura do usuario
+    public String toString(){
+        return "Usuario [ id: '" + id + "', nome: '" + nomeUsuario + "', perfil: '" + perfil.getDescricao() + "' ]";
+    }
 }

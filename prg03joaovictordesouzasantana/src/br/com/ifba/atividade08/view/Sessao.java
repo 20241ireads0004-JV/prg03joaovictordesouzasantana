@@ -40,5 +40,18 @@ public class Sessao {
         this.token = token;
     }
     
-    
+    //construtor padrao
+    public Sessao(){  
+    }
+
+    //construtor para preencher o objeto.
+    public Sessao(Long id, Usuario usuario, String token){
+        this.id = id;
+        this. usuario = usuario;
+        this.token = token;
+    }
+    //metodo toString para deixar as informações organizadas para leitura do usuario
+     public String toString(){
+        return "Sessao [ token: '" + token + "', usuario: '" + usuario.getNomeUsuario() + "' ]";
+    }
 }
