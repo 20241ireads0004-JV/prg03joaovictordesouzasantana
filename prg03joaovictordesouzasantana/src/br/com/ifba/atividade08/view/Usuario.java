@@ -20,6 +20,63 @@ public class Usuario {
     private String senha;
     private LocalDateTime ultimoLogin;
     private Boolean ativo;
+
+    //metodos getters e setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PerfilUsuario getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(PerfilUsuario perfil) {
+        this.perfil = perfil;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public LocalDateTime getUltimoLogin() {
+        return ultimoLogin;
+    }
+
+    public void setUltimoLogin(LocalDateTime ultimoLogin) {
+        this.ultimoLogin = ultimoLogin;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
     
     
 }
