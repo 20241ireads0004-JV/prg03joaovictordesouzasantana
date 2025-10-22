@@ -11,4 +11,10 @@ package br.com.ifba.atividade09.view;
 public class PagamentoCartao implements Pagamento{
     //atributo do valor da compra
     private double valor;
+
+    public PagamentoCartao(double valor) {
+        this.valor = valor;
+    }
+    
+    
 }
