@@ -8,6 +8,26 @@ package br.com.ifba.atividade10.view;
  *
  * @author user
  */
-public class Forma {
+public abstract class Forma {
+    //atributo
+    private String nome;
+
+    //metodo construtor
+    public Forma(String nome) {
+        this.nome = nome;
+    }
+
+    //metodo getter para "pegar" o nome da forma
+    public String getNome() {
+        return nome;
+    }
     
+    //metodo padrão para formas 2D e 3D
+    public abstract double obterArea();
+    
+    //metodo para mostrar o nome da forma
+    @Override
+    public String toString() {
+        return "Forma: " + nome;
+    }
 }

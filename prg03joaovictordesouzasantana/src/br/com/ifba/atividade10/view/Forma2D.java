@@ -8,6 +8,15 @@ package br.com.ifba.atividade10.view;
  *
  * @author user
  */
-public class Forma2D extends Forma{
+public abstract class Forma2D extends Forma{
     
+    public Forma2D(String nome) {
+        
+        //Utiliza o metodo construtor da classe mãe(Forma)
+        super(nome);
+    }
+    
+    //metodo em que cada forma 2D terá sua própria maneira de calcular  
+    @Override
+    public abstract double obterArea();
 }
