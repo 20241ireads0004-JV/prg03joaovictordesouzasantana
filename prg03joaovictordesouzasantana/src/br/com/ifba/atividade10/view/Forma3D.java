@@ -21,7 +21,6 @@ public abstract class Forma3D extends Forma{
     public abstract double obterArea();
     
     //metodo para calculo do volume, todas formas 3D usarao, inicializa com 0
-    public double obterVolume() {
-        return 0.0;
-    }
+    @Override
+    public abstract double obterVolume();
 }
