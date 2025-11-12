@@ -3,20 +3,119 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.curso.view;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import br.com.ifba.curso.entity.Curso;
+import java.util.List;
 /**
  *
- * @author
+ * @author misae
  */
+
+//e aqui é a Classe que representa a tela para listar cursos
+
 public class CursoListar extends javax.swing.JFrame {
+    
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CursoListar.class.getName());
 
     /**
      * Creates new form CursoListar
      */
+    
+    //aqui o objeto sorter para organizar as linhas da tabela conforme o filtro de pesquisa
+    private TableRowSorter<DefaultTableModel> sorter;
+    
     public CursoListar() {
+        
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        // Carrega os cursos ao abrir a tela
+        carregarCursos();
+        
+        // configura sorter para a tabela 
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    sorter = new TableRowSorter<>(model);
+    jTable1.setRowSorter(sorter);
+
+    // document listener para filtrar enquanto digita
+    txtProcurar.getDocument().addDocumentListener(new DocumentListener() {
+    private void filtrar() {
+        String texto = txtProcurar.getText();
+        if (texto == null || texto.trim().isEmpty()) {
+            sorter.setRowFilter(null);
+            return;
+        }
+        
+        // escapando caracteres especiais para evitar PatternSyntaxException
+        String safe = Pattern.quote(texto);
+        
+        //aqui temos o Tratamentos de exceções na pratica
+        try {
+            // (?i) = case-insensitive, filtra na coluna 0 (nome)
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)^" + safe, 0));
+        } catch (PatternSyntaxException ex) {
+            // se algo der errado com a regex, remove o filtro
+            sorter.setRowFilter(null);
+        }
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) { filtrar(); }
+    @Override
+    public void removeUpdate(DocumentEvent e) { filtrar(); }
+    @Override
+    public void changedUpdate(DocumentEvent e) { filtrar(); }
+});
+    }
+    
+    public void carregarCursos() {
+        
+        // Criar o EntityManager e a consulta para buscar todos os cursoss
+        
+    EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("cursoPU");
+    EntityManager em = emf.createEntityManager();
+
+    
+    //tratamento de excecoes
+    try {
+        // Criar a consulta para obter todos os cursos
+        List<Curso> cursos = em.createQuery("SELECT c FROM Curso c", Curso.class).getResultList();
+
+        // obtem o modelo da tabela
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        
+        // aqui limpa a tabela antes de adicionar os novos cursos
+        model.setRowCount(0);
+
+        // preenche a tabela com os dados dos cursos
+        for (Curso curso : cursos) {
+            model.addRow(new Object[]{curso.getNome(), curso.getCodigo()});  // Exibe apenas "Nome" e "Código"
+        }
+
+        
+        jTable1.getColumnModel().getColumn(2).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(2).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(0);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        
+        // fechar o EntityManager
+        em.close();
+        emf.close();
+    }
     }
 
     /**
@@ -29,7 +128,7 @@ public class CursoListar extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtProcurar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -45,25 +144,22 @@ public class CursoListar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(80, 80, 80));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(180, 180, 180), 1, true));
-        jTextField1.setOpaque(true);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtProcurar.setBackground(new java.awt.Color(255, 255, 255));
+        txtProcurar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtProcurar.setForeground(new java.awt.Color(80, 80, 80));
+        txtProcurar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtProcurar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(180, 180, 180), 1, true));
+        txtProcurar.setOpaque(true);
+        txtProcurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtProcurarActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 250, 30));
+        getContentPane().add(txtProcurar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 250, 30));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Nome", "Codigo"
@@ -81,7 +177,7 @@ public class CursoListar extends javax.swing.JFrame {
                 btnExcluirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, 30));
+        getContentPane().add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, 30));
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
 
         btnAdicionar.setText("Adicionar");
@@ -98,24 +194,25 @@ public class CursoListar extends javax.swing.JFrame {
                 btnEditarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, 30));
+        getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, 30));
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 510, 340, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtProcurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProcurarActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtProcurarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
-        // Pega a linha selecionada na tabela
-    int linhaSelecionada = jTable1.getSelectedRow();
+        
+        // Obtém a linha selecionada na tabela
+   int linhaSelecionada = jTable1.getSelectedRow();
 
+   
+    // verifica se uma linha foi selecionada
     if (linhaSelecionada == -1) {
-        // Nenhuma linha selecionada
         javax.swing.JOptionPane.showMessageDialog(this, 
             "Selecione um curso para excluir!", 
             "Aviso", 
@@ -123,10 +220,11 @@ public class CursoListar extends javax.swing.JFrame {
         return;
     }
 
-    // Pega o nome do curso da linha selecionada (coluna 0)
+    //aqui é pra obter os dados dos cursos selecionados
     String nomeCurso = jTable1.getValueAt(linhaSelecionada, 0).toString();
+    String codigoCurso = jTable1.getValueAt(linhaSelecionada, 1).toString();
 
-    // Mostra a mensagem de confirmação
+    //confirma exclusão
     int confirmacao = javax.swing.JOptionPane.showConfirmDialog(
         this,
         "Tem certeza que deseja excluir: " + nomeCurso + "?",
@@ -134,9 +232,27 @@ public class CursoListar extends javax.swing.JFrame {
         javax.swing.JOptionPane.YES_NO_OPTION
     );
 
-    // Se o usuário clicou em "Sim"
     if (confirmacao == javax.swing.JOptionPane.YES_OPTION) {
-        // Aqui você remove da tabela (e futuramente do arquivo)
+        
+        // excluir curso no banco de dados
+        jakarta.persistence.EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("cursoPU");
+        jakarta.persistence.EntityManager em = emf.createEntityManager();
+        
+        // Encontrar o curso no banco de dados com base no nome e código (ou ID, se disponível)
+        Curso curso = em.createQuery("SELECT c FROM Curso c WHERE c.nome = :nome AND c.codigo = :codigo", Curso.class)
+                        .setParameter("nome", nomeCurso)
+                        .setParameter("codigo", codigoCurso)
+                        .getSingleResult();
+
+        // excluir o curso encontrado
+        em.getTransaction().begin();
+        em.remove(curso);  // aqui remove de vez o curso encontrado
+        em.getTransaction().commit();
+        
+        em.close();
+        emf.close();
+
+        // e aqui remove da tabela
         javax.swing.table.DefaultTableModel model = 
             (javax.swing.table.DefaultTableModel) jTable1.getModel();
         model.removeRow(linhaSelecionada);
@@ -147,22 +263,53 @@ public class CursoListar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-     // Cria uma nova janela JFrame para a tela de adicionar
-    CursoAdicionar cursoAdicionar = new CursoAdicionar(); // cria a tela de adicionar
+     // cria uma nova janela JFrame para a tela de adicionar
+     
+    CursoAdicionar cursoAdicionar = new CursoAdicionar(this); // vai criar a tela de adicionar
     
-    // Exibe a nova janela
+    ///vai exibir a nova tabela
     cursoAdicionar.setVisible(true);
-    cursoAdicionar.pack();  // Ajusta o tamanho automaticamente
-    cursoAdicionar.setLocationRelativeTo(null);  // Centraliza a janela
+    cursoAdicionar.pack();  // pra ajustar o tamanho automatico
+    
+    cursoAdicionar.setLocationRelativeTo(null);  // aqui é pra centralizar a janela
+    cursoAdicionar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);  
 
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-        // Cria uma nova janela JFrame para a tela de adicionar
-    CursoEditar cursoEditar = new CursoEditar(); // cria a tela de adicionar
+      
+// pega os dados da linha selecionada
+    int linhaSelecionada = jTable1.getSelectedRow();  // verifica a linha selecionada
+
+    if (linhaSelecionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Selecione um curso para editar!",
+            "Aviso",
+            javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // pega os dados do curso a partir da linha selecionada
+    String nome = jTable1.getValueAt(linhaSelecionada, 0).toString(); // o nome
+    String codigo = jTable1.getValueAt(linhaSelecionada, 1).toString(); // Código
+
     
-    // Exibe a nova janela
+    
+    
+    EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("cursoPU");
+    EntityManager em = emf.createEntityManager();
+
+    Curso curso = em.createQuery("SELECT c FROM Curso c WHERE c.nome = :nome AND c.codigo = :codigo", Curso.class)
+                    .setParameter("nome", nome)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
+
+    Long idCurso = curso.getId(); // agora temos ID do curso
+
+    // vai criar a tela de edição e passa os dados corretos
+    CursoEditar cursoEditar = new CursoEditar(this, idCurso, nome, codigo);
+
+    // exibe a nova janela
     cursoEditar.setVisible(true);
     cursoEditar.pack();  // Ajusta o tamanho automaticamente
     cursoEditar.setLocationRelativeTo(null);  // Centraliza a janela
@@ -203,7 +350,7 @@ public class CursoListar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtProcurar;
     // End of variables declaration//GEN-END:variables
 }

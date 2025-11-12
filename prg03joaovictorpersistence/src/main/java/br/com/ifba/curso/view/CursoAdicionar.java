@@ -3,21 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.curso.view;
+import br.com.ifba.curso.entity.Curso;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import javax.swing.JOptionPane;
+
 
 /**
  *
- * @author
+ * @author misae
  */
+
+ //Classe que representa a tela para adicionar um novo curso
+
+ //Esta tela permite ao usuário inserir o nome e código do curso e adicionar à tabela da tela principal
+
 public class CursoAdicionar extends javax.swing.JFrame {
+    
+    //tela principal (CursoListar) para adicionar o curso à tabela
+    private CursoListar telaListar; // aqui é a referência da tela principal
+
+     // novo construtor recebendo a tela principal.
+    public CursoAdicionar(CursoListar telaListar) {
+    this.telaListar = telaListar;
+    initComponents();
+}
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CursoAdicionar.class.getName());
 
-    /**
-     * Creates new form CursoAdicionar
-     */
+    
+    // aqui é o método que cria e inicializa os componentes da tela.
     public CursoAdicionar() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,9 +52,9 @@ public class CursoAdicionar extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCurso = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCurso1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,22 +64,27 @@ public class CursoAdicionar extends javax.swing.JFrame {
 
         jLabel2.setText("Insira o nome do curso:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtCursoActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Insira o codigo do curso:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtCurso1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtCurso1ActionPerformed(evt);
             }
         });
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Criar Curso");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -69,9 +96,9 @@ public class CursoAdicionar extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1)
+                            .addComponent(txtCurso)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
-                            .addComponent(jTextField2)))
+                            .addComponent(txtCurso1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jButton1))
@@ -88,11 +115,11 @@ public class CursoAdicionar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCurso1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -101,13 +128,73 @@ public class CursoAdicionar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCursoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtCursoActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtCurso1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCurso1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtCurso1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+   
+// Obtem dados dos campos
+    String nome = txtCurso.getText();
+    String codigo = txtCurso1.getText();
+
+    // vai verificar se os campos não estão vazios
+    if (nome.isEmpty() || codigo.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Preencha todos os campos!", 
+            "Erro", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Criar o objeto Curso
+    Curso curso = new Curso(nome, codigo);
+
+    // Criar o EntityManager e fazer a persistência
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("cursoPU");
+    EntityManager em = emf.createEntityManager();
+
+    
+    //tratamento de exceções
+    try {
+        em.getTransaction().begin();  //inicia
+        em.persist(curso);  // Persiste o curso no banco de dados
+        em.getTransaction().commit();  // Commit da transação
+
+        //aqui é pra confirmar
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Curso \"" + nome + "\" adicionado com sucesso!");
+
+        // atualiza a tela da tabela principal,importante
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) telaListar.jTable1.getModel();
+        model.addRow(new Object[]{nome, codigo}); // ou seja, atualiza a tabela com o novo curso
+
+    } catch (Exception e) {
+        // Em caso de erro, mostra erro
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Erro ao adicionar o curso: " + e.getMessage(),
+            "Erro", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        
+        // Logar o erro para facilitar o diagnóstico
+        logger.severe("Erro ao adicionar curso: " + e.getMessage());
+    } finally {
+        
+        
+        em.close();
+        emf.close();
+    }
+
+    // aqui fecha a janela de adicionar curso
+    this.dispose(); 
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,7 +226,7 @@ public class CursoAdicionar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtCurso;
+    private javax.swing.JTextField txtCurso1;
     // End of variables declaration//GEN-END:variables
 }

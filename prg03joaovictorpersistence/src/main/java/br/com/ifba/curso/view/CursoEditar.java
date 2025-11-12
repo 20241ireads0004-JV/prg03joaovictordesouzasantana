@@ -3,20 +3,44 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.curso.view;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import br.com.ifba.curso.entity.Curso;
+
 
 /**
  *
- * @author
+ * @author misae
  */
+
+//Classe que representa a tela para editar um curso existente
+
 public class CursoEditar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CursoEditar.class.getName());
 
-    /**
-     * Creates new form CursoEditar
-     */
+    // aqui temos uma referencia da tela principal e o índice da linha da tabela que será editada
+    private CursoListar telaListar;
+    
+    private Long idCurso; //um Long, que representa o ID real do curso.
+
+// aqui o construtor que recebe a tela principal, a linha e os dados do curso
+    public CursoEditar(CursoListar telaListar, Long idCurso, String nome, String codigo) {
+    this.telaListar = telaListar;
+    this.idCurso = idCurso;  // Agora estamos passando o ID real do curso
+    initComponents();
+
+    // aqui preenche os campos da tela com os dados do curso
+    txtCurso.setText(nome);
+    txtCodigo.setText(codigo);
+}
+    
+    //metodo construtor padrão
     public CursoEditar() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+
     }
 
     /**
@@ -30,9 +54,9 @@ public class CursoEditar extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCurso = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,14 +68,19 @@ public class CursoEditar extends javax.swing.JFrame {
 
         jLabel3.setText("Insira o novo código do curso:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtCodigoActionPerformed(evt);
             }
         });
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton1.setText("Editar Curso");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,10 +95,10 @@ public class CursoEditar extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
+                            .addComponent(txtCurso)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2)))
+                            .addComponent(txtCodigo)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(144, 144, 144)
                         .addComponent(jButton1)))
@@ -83,11 +112,11 @@ public class CursoEditar extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(15, 15, 15))
@@ -96,9 +125,56 @@ public class CursoEditar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String novoNome = txtCurso.getText();
+    String novoCodigo = txtCodigo.getText(); // Obtém os novos valores dos campos de nome e código
+
+    //aqui e´apenas pra verificar se os campos estão vazios
+    if (novoNome.isEmpty() || novoCodigo.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "Preencha todos os campos!",
+            "Erro",
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    //transação com o banco de dados
+    EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("cursoPU");
+    EntityManager em = emf.createEntityManager();
+
+    
+    //aqui o tratamento de esceções
+    try {
+        
+        //carrega o curso para atualizar com o novo nome e código
+        Curso curso = em.find(Curso.class, idCurso); 
+
+        if (curso != null) {
+            em.getTransaction().begin();
+            curso.setNome(novoNome);  // pra atualizaer o nome
+            curso.setCodigo(novoCodigo);// o código
+            
+            em.merge(curso); // e aqui faz atualização do curso no banco de dados
+            em.getTransaction().commit();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        em.close();
+        emf.close();
+    }
+
+    // Recarrega a tabela de cursos após a edição
+    telaListar.carregarCursos(); 
+
+    
+    this.dispose(); // Fecha apenas a janela de edição
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,7 +206,7 @@ public class CursoEditar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtCurso;
     // End of variables declaration//GEN-END:variables
 }
