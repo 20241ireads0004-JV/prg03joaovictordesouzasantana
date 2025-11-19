@@ -21,7 +21,6 @@ import java.util.List;
  */
 
 //e aqui é a Classe que representa a tela para listar cursos
-
 public class CursoListar extends javax.swing.JFrame {
     
     

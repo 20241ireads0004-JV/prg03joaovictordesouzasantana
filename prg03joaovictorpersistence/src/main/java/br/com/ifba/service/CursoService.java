@@ -7,13 +7,17 @@ import br.com.ifba.curso.dao.CursoDao;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author user
  */
+@Service
 public class CursoService implements CursoIService{
     // DAO responsável pela comunicação com o banco de dados
-    private final CursoDao dao = new CursoDao();
+    @Autowired
+    private CursoDao dao;
 
     
     

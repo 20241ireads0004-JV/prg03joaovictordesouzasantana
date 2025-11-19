@@ -9,7 +9,7 @@ import br.com.ifba.infrastructure.dao.GenericIDao;
 
 
 public interface CursoIDao extends GenericIDao<Curso>{
-    
+        
     
     // Método específico para buscar cursos por nome
     public abstract Curso findByName(String nome); 

@@ -14,7 +14,6 @@ import br.com.ifba.curso.entity.Curso;
  */
 
 //Classe que representa a tela para editar um curso existente
-
 public class CursoEditar extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CursoEditar.class.getName());

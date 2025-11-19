@@ -10,7 +10,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class GenericDao<Entity extends PersistenceEntity> implements GenericIDao<Entity> {
     
     // Cria  uma instância estática de EntityManagerFactory para ser compartilhada por toda a aplicação

@@ -7,14 +7,19 @@ import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.service.CursoIService;
 import br.com.ifba.service.CursoService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 /**
  *
  * @author user
  */
+@Controller
 public class CursoController implements CursoIController{
     
     //instância da camada Service, que contém as regras de negócio
-    private final CursoIService service = (CursoIService) new CursoService();
+    @Autowired
+    private CursoIService service;
 
     @Override
     public Curso save(Curso curso) {
