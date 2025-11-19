@@ -11,17 +11,19 @@ import java.util.List;
 public interface GenericIDao<Entity extends PersistenceEntity> {
     
     //Salva entidade
-    public abstract Entity salvar(Entity obj);
+    public abstract Entity save(Entity obj);
 
     //Atualiza entidade existente
-    public abstract Entity atualizar(Entity obj);
+    public abstract Entity update(Entity obj);
 
     //Exclui entidade existente
-    public abstract void excluir(Entity obj);
+    public abstract void delete(Entity obj);
 
     //Retorna todas entidades existentes
-    public abstract List<Entity> listarTodos();
+    public abstract List<Entity> findAll();
 
     //Busca pelo ID
-    public abstract Entity buscarId(Long id);
+    public abstract Entity findById(Long id);
+    
+    
 }

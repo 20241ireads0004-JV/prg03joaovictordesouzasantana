@@ -16,10 +16,6 @@ import jakarta.persistence.Id;
 @Entity
 public class Curso extends PersistenceEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String nome;
     private String codigo;
 
@@ -32,10 +28,6 @@ public class Curso extends PersistenceEntity{
         this.codigo = codigo;
     }
 
-    // getters e setters.
-    public Long getId() {
-        return id;
-    }
 
     public String getNome() {
         return nome;

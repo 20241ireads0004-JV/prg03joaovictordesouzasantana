@@ -12,10 +12,11 @@ import jakarta.persistence.TypedQuery;
 
 public class CursoDao extends GenericDao<Curso> implements CursoIDao{
     
-    @Override
-    public Curso buscarPorNome(String nome) {
+    
+     @Override
+    public Curso findByName(String nome) {
         
-        // aqui é a criação de um EntityManager para gerenciar a consulta que será feita
+        // aqui é a criação de um EntityManager para gerenciar a consulta q será feita
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             // consulta para buscar um curso pelo nome
@@ -31,4 +32,25 @@ public class CursoDao extends GenericDao<Curso> implements CursoIDao{
             entityManager.close(); 
         }
     }
+    
+    @Override
+    public Curso findByCodigo(String codigo) {
+
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    
+    try {
+        TypedQuery<Curso> query = entityManager.createQuery(
+            "SELECT c FROM Curso c WHERE c.codigo = :codigo", Curso.class);
+        
+        query.setParameter("codigo", codigo);
+        
+        return query.getSingleResult();
+        
+    } catch (Exception e) {
+        System.err.println("Erro ao buscar curso por código: " + e.getMessage());
+        return null;
+    } finally {
+        entityManager.close();
+    }
+}
 }
