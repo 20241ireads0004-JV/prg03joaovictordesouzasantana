@@ -7,12 +7,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import br.com.ifba.curso.entity.Curso;
 
-
-/**
- *
- * @author misae
- */
-
 //Classe que representa a tela para editar um curso existente
 public class CursoEditar extends javax.swing.JFrame {
     

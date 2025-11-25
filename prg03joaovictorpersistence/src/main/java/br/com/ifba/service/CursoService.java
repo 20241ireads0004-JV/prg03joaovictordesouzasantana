@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.ifba.service;
-import br.com.ifba.curso.dao.CursoDao;
 import br.com.ifba.curso.entity.Curso;
+import br.com.ifba.curso.repository.CursoRepository;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -17,11 +18,9 @@ import org.springframework.stereotype.Service;
 public class CursoService implements CursoIService{
     // DAO responsável pela comunicação com o banco de dados
     @Autowired
-    private CursoDao dao;
-
+    private CursoRepository repository;
     
-    
-     // Salva um novo curso no sistema.
+    // Salva um novo curso no sistema.
      // só q antes de salvar, aplica validações.
     @Override
     public Curso save(Curso curso) {
@@ -37,17 +36,17 @@ public class CursoService implements CursoIService{
         }
 
         // esse aqui verifica q não pode existir outro curso com o mesmo nome
-        if (dao.findByName(curso.getNome()) != null) {
+        if (repository.findByName(curso.getNome()) != null) {
             throw new RuntimeException("Já existe um curso com esse nome!");
         }
         
-        if (dao.findByCodigo(curso.getCodigo()) != null) {
+        if (repository.findByCodigo(curso.getCodigo()) != null) {
         throw new RuntimeException("Já existe um curso com esse código!");
         }
 
 
         //se depois de tudo isso estiver certo, salva o curso
-        return dao.save(curso);
+        return repository.save(curso);
     }
 
     
@@ -70,18 +69,18 @@ public class CursoService implements CursoIService{
     }
 
     // Verifica se já existe outro curso com o mesmo nome
-    Curso cursoNome = dao.findByName(curso.getNome());
+    Curso cursoNome = repository.findByName(curso.getNome());
     if (cursoNome != null && !cursoNome.getId().equals(curso.getId())) {
         throw new RuntimeException("Já existe outro curso com esse nome!");
     }
 
     // Verifica se já existe outro curso com o mesmo código
-    Curso cursoCodigo = dao.findByCodigo(curso.getCodigo());
+    Curso cursoCodigo = repository.findByCodigo(curso.getCodigo());
     if (cursoCodigo != null && !cursoCodigo.getId().equals(curso.getId())) {
         throw new RuntimeException("Já existe outro curso com esse código!");
     }
 
-    return dao.update(curso);
+    return repository.update(curso);
     }
 
     //esse deleta um curso.
@@ -97,24 +96,24 @@ public class CursoService implements CursoIService{
             throw new RuntimeException("ID é obrigatório para deletar.");
         }
 
-        dao.delete(curso);
+        repository.delete(curso);
     }
 
     @Override
     public List<Curso> findAll() { //lista todos os cursos cadastrados.
-        return dao.findAll();
+        return repository.findAll();
     }
 
     @Override
-    public Curso findById(Long id) { //busca um curso pelo ID, e com validação.
+    public Optional<Curso> findById(Long id) { //busca um curso pelo ID, e com validação.
 
         if (id == null) {
             throw new RuntimeException("ID não pode ser nulo!");
         }
 
-        return dao.findById(id);
+        return repository.findById(id);
     }
-
+    
     @Override
     public Curso findByName(String name) { //busca curso pelo nome
 
@@ -122,11 +121,12 @@ public class CursoService implements CursoIService{
             throw new RuntimeException("Nome não pode ser vazio!");
         }
 
-        return dao.findByName(name);
+        return repository.findByName(name);
     }
 
     @Override
     public Curso findByCodigo(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
+
 }

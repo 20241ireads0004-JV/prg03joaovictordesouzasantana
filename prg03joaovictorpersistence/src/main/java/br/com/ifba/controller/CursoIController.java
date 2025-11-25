@@ -5,11 +5,13 @@
 package br.com.ifba.controller;
 import br.com.ifba.curso.entity.Curso;
 import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author user
  */
-public interface CursoIController {
+public interface CursoIController { 
+    
     //salva um novo Curso no sistema.
     Curso save(Curso curso);
 
@@ -26,7 +28,7 @@ public interface CursoIController {
     Curso findByCodigo(String codigo);
 
     //busca um curso por id
-    Curso findById(Long id);
+    Optional<Curso> findById(Long id);
 
     //busca um curso por nome
     Curso findByName(String name);

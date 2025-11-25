@@ -6,10 +6,6 @@ package br.com.ifba.curso.entity;
 
 import br.com.ifba.infrastructure.entity.PersistenceEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 
  //Representa a entidade Curso mapeada para o banco de dados.
  

@@ -15,10 +15,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import br.com.ifba.curso.entity.Curso;
 import java.util.List;
-/**
- *
- * @author misae
- */
 
 //e aqui é a Classe que representa a tela para listar cursos
 public class CursoListar extends javax.swing.JFrame {

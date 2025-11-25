@@ -5,6 +5,7 @@
 package br.com.ifba.service;
 import br.com.ifba.curso.entity.Curso;
 import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author user
@@ -18,10 +19,10 @@ public interface CursoIService {
     void delete(Curso curso);
 
     List<Curso> findAll();
-
+    
     Curso findByCodigo(String codigo);
     
-    Curso findById(Long id);
+    Optional<Curso> findById(Long id);
 
     Curso findByName(String name);
 }

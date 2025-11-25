@@ -5,11 +5,10 @@
 package br.com.ifba.controller;
 import br.com.ifba.curso.entity.Curso;
 import br.com.ifba.service.CursoIService;
-import br.com.ifba.service.CursoService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 /**
  *
  * @author user
@@ -20,7 +19,7 @@ public class CursoController implements CursoIController{
     //instância da camada Service, que contém as regras de negócio
     @Autowired
     private CursoIService service;
-
+    
     @Override
     public Curso save(Curso curso) {
         return service.save(curso);
@@ -40,9 +39,8 @@ public class CursoController implements CursoIController{
     public List<Curso> findAll() {
         return service.findAll();
     }
-
     @Override
-    public Curso findById(Long id) {
+    public Optional<Curso> findById(Long id) {
         return service.findById(id);
     }
 

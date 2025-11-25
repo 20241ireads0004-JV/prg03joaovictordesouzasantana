@@ -9,11 +9,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author misae
- */
-
  //Classe que representa a tela para adicionar um novo curso
 
  //Esta tela permite ao usuário inserir o nome e código do curso e adicionar à tabela da tela principal
