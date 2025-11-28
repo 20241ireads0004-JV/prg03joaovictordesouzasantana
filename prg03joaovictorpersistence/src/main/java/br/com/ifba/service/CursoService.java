@@ -8,6 +8,8 @@ import br.com.ifba.curso.repository.CursoRepository;
 import br.com.ifba.infrastructure.util.StringUtil;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -20,33 +22,23 @@ public class CursoService implements CursoIService{
     @Autowired
     private CursoRepository repository;
     
+    private static final Logger log = LoggerFactory.getLogger(CursoService.class);
     // Salva um novo curso no sistema.
      // só q antes de salvar, aplica validações.
     @Override
-    public Curso save(Curso curso) {
+    public Curso save(Curso curso) throws RuntimeException{
 
          //faz a verificação se o objeto curso é nulo
         if (curso == null) {
-            throw new RuntimeException("Curso não pode ser nulo!");
-        }
-
-        // esse verifica se o nome está vazio ou nulo usando StringUtil
-        if (StringUtil.isNullOrEmpty(curso.getNome())) {
-            throw new RuntimeException("O nome do curso não pode ser vazio!");
-        }
-
-        // esse aqui verifica q não pode existir outro curso com o mesmo nome
-        if (repository.findByName(curso.getNome()) != null) {
-            throw new RuntimeException("Já existe um curso com esse nome!");
-        }
-        
-        if (repository.findByCodigo(curso.getCodigo()) != null) {
-        throw new RuntimeException("Já existe um curso com esse código!");
-        }
-
-
-        //se depois de tudo isso estiver certo, salva o curso
+            throw new RuntimeException("Dados do" + " Curso não preenchidos.");
+            
+        } else if(curso.getId() != null) {
+        throw new RuntimeException("Curso" + " já existente no Banco de Dados.");
+        } else {
+        //salva o curso
+        log.info("Salvando o Objeto Curso!");
         return repository.save(curso);
+        }
     }
 
     
@@ -95,12 +87,13 @@ public class CursoService implements CursoIService{
         if (curso.getId() == null) {
             throw new RuntimeException("ID é obrigatório para deletar.");
         }
-
         repository.delete(curso);
+        log.info("Curso excluído com sucesso!");
     }
 
     @Override
     public List<Curso> findAll() { //lista todos os cursos cadastrados.
+        log.info("Listando todos os cursos.");
         return repository.findAll();
     }
 

@@ -8,21 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 
 @MappedSuperclass //A classe não será diretamente mapeada para uma tabela, mas as propriedades serão herdadas por outras classes
-
+@Data
 public class PersistenceEntity {
     
     @Id //marca como chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY)//gera automaticamente o ID pelo banco de dados.
     private Long id;
-
-    //getter e setter
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
